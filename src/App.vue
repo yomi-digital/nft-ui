@@ -1,13 +1,24 @@
 <template>
   <div id="app">
-    <div style="height:50px;padding-top:10px;border-bottom:1px solid #000; margin-bottom:30px">NFT-JSON GENERATOR</div>
-    <router-view/>
+    <div
+      style="
+        height: 50px;
+        padding-top: 10px;
+        border-bottom: 1px solid #000;
+        margin-bottom: 30px;
+      "
+    >
+      NFT-JSON GENERATOR
+    </div>
+    <router-view />
+    <hr />
+    Developed with ❤️ <a href="https://yomi.digital" target="_blank">YOMI</a>
   </div>
 </template>
 
 <style>
 #app {
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
