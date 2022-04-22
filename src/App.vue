@@ -4,7 +4,7 @@
       style="
         height: 50px;
         padding-top: 10px;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid #fff;
         margin-bottom: 30px;
       "
     >
@@ -22,6 +22,39 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
+  background: #121212;
+  min-height: 100vh;
+}
+.label {
+  color: #fff !important;
+  text-align: left!important;
+}
+pre {
+  border-radius: 10px;
+  background: #444 !important;
+  color: #fff !important;
+}
+.button {
+  background: #444 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+.input,
+textarea {
+  background-color: transparent !important;
+  border-bottom: 1px solid #fff;
+  border-radius: 0px !important;
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  text-align: left !important;
+  color:#fff!important;
+}
+.textarea {
+  border-left: 1px solid #fff!important;
+  color:#fff!important;
+  border-bottom: 0 !important;
+  text-align: left !important;
 }
 </style>

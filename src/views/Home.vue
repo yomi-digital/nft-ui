@@ -36,13 +36,19 @@
       </div>
     </div>
     <div class="column">
-      <pre style="text-align: left">{{
-        JSON.stringify(metadata, null, 4)
-      }}</pre>
-      <b-button @click="uploadMetadata" style="width:100%; margin: 15px 0">UPLOAD METADATA TO IPFS</b-button>
-      <div v-if="ipfsMetadata">
-        Final metadata for your file is:<br />
-        <a :href="'https://ipfs.io/ipfs/' + ipfsMetadata" target="_blank">{{ ipfsMetadata }}</a>
+      <div style="padding: 0 10px">
+        <pre style="text-align: left">{{
+          JSON.stringify(metadata, null, 4)
+        }}</pre>
+        <b-button @click="uploadMetadata" style="width: 100%; margin: 15px 0"
+          >UPLOAD METADATA TO IPFS</b-button
+        >
+        <div v-if="ipfsMetadata">
+          Final metadata for your file is:<br />
+          <a :href="'https://ipfs.io/ipfs/' + ipfsMetadata" target="_blank">{{
+            ipfsMetadata
+          }}</a>
+        </div>
       </div>
     </div>
   </div>
