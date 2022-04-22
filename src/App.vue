@@ -12,7 +12,7 @@
     </div>
     <router-view />
     <hr />
-    Developed with ❤️ <a href="https://yomi.digital" target="_blank">YOMI</a>
+    Developed with ❤️ by <a href="https://yomi.digital" target="_blank">YOMI</a>
   </div>
 </template>
 
