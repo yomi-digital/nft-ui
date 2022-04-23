@@ -8,7 +8,7 @@
         margin-bottom: 30px;
       "
     >
-      NFT-JSON GENERATOR
+      SIMPLE NFT GENERATOR
     </div>
     <router-view />
     <hr />
@@ -29,6 +29,9 @@
 .label {
   color: #fff !important;
   text-align: left!important;
+}
+.title {
+  color:#fff!important;
 }
 pre {
   border-radius: 10px;
