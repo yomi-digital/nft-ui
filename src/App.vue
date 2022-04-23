@@ -8,7 +8,7 @@
         margin-bottom: 30px;
       "
     >
-      SIMPLE NFT GENERATOR
+      NFT GENERATOR
     </div>
     <router-view />
     <hr />

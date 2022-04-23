@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div v-if="!ipfsMetadata" class="columns">
+    <div v-if="!ipfsMetadata && !isMinted" class="columns">
       <div class="column" style="padding: 0 20px">
-        <img
-          v-if="metadata.image"
-          :src="metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/')"
-        /><br />
         <b-field v-if="!fileToMint.name">
           <b-upload v-model="fileToMint" expanded drag-drop>
             <section class="section">
@@ -41,7 +37,12 @@
         </div>
       </div>
       <div class="column">
-        <div style="padding: 0 10px">
+        <div style="padding: 0 10px 0 0">
+          <img
+            v-if="metadata.image"
+            width="100%"
+            :src="metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/')"
+          /><br />
           <pre style="text-align: left">{{
             JSON.stringify(metadata, null, 4)
           }}</pre>
@@ -57,7 +58,7 @@
         </div>
       </div>
     </div>
-    <div v-if="ipfsMetadata" style="text-align: center">
+    <div v-if="ipfsMetadata && !isMinted" style="text-align: center">
       <h1 class="title is-1">Publish NFT on Contract</h1>
       If you have a contract address please write it down here or simply create
       a new contract now.
@@ -88,6 +89,28 @@
         >
       </div>
     </div>
+    <div v-if="isMinted">
+      <h1 class="title is-1">Oh yes!</h1>
+      <img
+        src="https://media2.giphy.com/media/nqi89GMgyT3va/giphy.gif?cid=ecf05e475yzgqzpskd4hqei8v48q7wfiuk9a9i97qt4awu2n&rid=giphy.gif&ct=g"
+        width="250px"
+      /><br>
+      You completed the process, yeah!<br />
+      See you NFT in OpenSea at:<br />
+      <a
+        :href="
+          'https://testnets.opensea.io/assets/' +
+          contractAddress +
+          '/' +
+          mintedNft
+        "
+        >https://testnets.opensea.io/assets/{{ contractAddress }}/{{
+          mintedNft
+        }}</a
+      ><br /><br />
+      If you like it, follow us on
+      <a href="https://twitter.com/YOMI_WEB3">Twitter</a>!
+    </div>
   </div>
 </template>
 
@@ -106,6 +129,8 @@ export default {
       fileToMint: {},
       isUploadingIPFS: false,
       isUploadingMetadata: false,
+      isMinted: false,
+      mintedNft: "",
       isMinting: false,
       axios: axios,
       ipfsMetadata: "",
@@ -198,9 +223,19 @@ export default {
     async connect() {
       const app = this;
       window.ethereum.enable();
+      const cached = localStorage.getItem("eth_contract");
+      console.log(cached);
+      if (cached !== null) {
+        app.contractAddress = cached;
+      }
       try {
-        let accounts = await this.web3.eth.getAccounts();
-        app.account = accounts[0];
+        const network = await this.web3.eth.net.getId();
+        if (network === 4) {
+          let accounts = await this.web3.eth.getAccounts();
+          app.account = accounts[0];
+        } else {
+          alert("Please switch to Rinkeby Network!");
+        }
       } catch (e) {
         alert(e.message);
       }
@@ -208,6 +243,7 @@ export default {
     async mint() {
       const app = this;
       console.log("Minting NFT..");
+      localStorage.setItem("eth_contract", app.contractAddress);
       if (!app.isWorking) {
         app.isWorking = true;
         app.workingMessage = "Minting NFT, please confirm with Metamask..";
@@ -219,11 +255,13 @@ export default {
           }
         );
         try {
-          await contract.methods
+          const receipt = await contract.methods
             .mint(app.ipfsMetadata)
             .send({ from: app.account });
           app.isWorking = false;
-          alert("NFT minted correctly!");
+          console.log(receipt);
+          app.isMinted = true;
+          app.mintedNft = receipt.events.Minted.returnValues.tokenId;
           app.metadata = {
             name: "",
             description: "",
