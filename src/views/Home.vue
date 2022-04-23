@@ -1,6 +1,12 @@
 <template>
   <div class="columns">
     <div class="column" style="padding: 0 20px">
+      <img
+        v-if="metadata.image"
+        :src="
+          metadata.image.replace('ipfs://', 'https://ipfs.yomi.digital/ipfs/')
+        "
+      /><br />
       <b-field v-if="!fileToMint.name">
         <b-upload v-model="fileToMint" expanded drag-drop>
           <section class="section">
@@ -102,7 +108,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         }).then(function (response) {
-          app.metadata.image = response.data.Hash;
+          app.metadata.image = "ipfs://" + response.data.Hash;
           app.isUploadingIPFS = false;
         });
       } else {
